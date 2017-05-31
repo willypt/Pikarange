@@ -1,3 +1,9 @@
+#### 1.0.3 (2017-5-9)
+
+##### New Features
+
+* **caption data:** pass caption to show text for range selection ([cff0e681](https://github.com/willypt/Pikarange/commit/cff0e681198da9fcdf3cd0e466eb0ad1934b7090))
+
 #### 1.0.2 (2017-4-27)
 
 ##### New Features

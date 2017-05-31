@@ -261,6 +261,9 @@
 
         // internationalization
         i18n: {
+            startText     : '',
+            endText       : '',
+            startEndText  : '',
             previousMonth : 'Previous Month',
             nextMonth     : 'Next Month',
             months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
@@ -274,7 +277,7 @@
         // events array
         events: [],
         //eventDescriptions: [], // todo feature
-        
+
         // callback function
         onSelect: null,
         onOpen: null,
@@ -335,9 +338,9 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
-        return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
+       return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button class="pika-button pika-day" type="button" ' +
-                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '">' +
+                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '" data-beforetext="' + opts.startText + '" data-aftertext="' + opts.endText + '" data-beforeaftertext="' + opts.startEndText + '">' +
                         opts.day +
                  '</button>' +
                '</td>';
@@ -391,8 +394,8 @@
                 opts.i18n.months[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] 
-            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">') 
+        monthHtml = '<div class="pika-label">' + opts.i18n.months[month]
+            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
             + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
             + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
@@ -409,9 +412,9 @@
                 arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix 
+        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix
             + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-year" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
-            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "") 
+            + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
             + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
         if (opts.showMonthAfterYear) {
@@ -1142,7 +1145,7 @@
                     yearNumber = year,
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
-                    isInRange = 
+                    isInRange =
                         (opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange) ||
                         (opts.startRange && !opts.endRange && opts.startRange < day && day < opts.dateHover),
                     isDisabled = (opts.minDate && day < opts.minDate) ||
@@ -1175,7 +1178,10 @@
                         isStartRange: isStartRange,
                         isEndRange: isEndRange,
                         isInRange: isInRange,
-                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths
+                        showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
+                        startText: opts.i18n.startText? opts.i18n.startText : "",
+                        endText: opts.i18n.endText? opts.i18n.endText : "",
+                        startEndText: opts.i18n.startEndText? opts.i18n.startEndText : ""
                     };
 
                 if (opts.pickWholeWeek && isSelected) {
