@@ -288,7 +288,10 @@
         closeOnClick: true,
 
         // day and week label control
-        clickableDayAndWeekLabel: true
+        clickableDayAndWeekLabel: true,
+
+        // additional data attributes. Simple String to be added **directly** to the elements
+        additionalDataAttributes: ""
 
     },
 
@@ -313,7 +316,7 @@
             if (opts.showDaysInNextAndPreviousMonths) {
                 arr.push('is-outside-current-month');
             } else {
-                return '<td class="is-empty"></td>';
+                return '<td ' + opts.additionalDataAttributes + ' class="is-empty"></td>';
             }
         }
         if (opts.isDisabled) {
@@ -338,29 +341,29 @@
         if (opts.isEndRange) {
             arr.push('is-endrange');
         }
-       return '<td data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
-                 '<button class="pika-button pika-day" type="button" ' +
+       return '<td ' + opts.additionalDataAttributes + ' data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
+                 '<button ' + opts.additionalDataAttributes + ' class="pika-button pika-day" type="button" ' +
                     'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '" data-beforetext="' + opts.startText + '" data-aftertext="' + opts.endText + '" data-beforeaftertext="' + opts.startEndText + '">' +
                         opts.day +
                  '</button>' +
                '</td>';
     },
 
-    renderWeek = function (d, m, y) {
+    renderWeek = function (d, m, y, additionalDataAttributes) {
         // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
         var onejan = new Date(y, 0, 1),
             weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
-        return '<td class="pika-week">' + weekNum + '</td>';
+        return '<td ' + additionalDataAttributes + '  class="pika-week">' + weekNum + '</td>';
     },
 
-    renderRow = function(days, isRTL, pickWholeWeek, isRowSelected)
+    renderRow = function(days, isRTL, pickWholeWeek, isRowSelected, additionalDataAttributes)
     {
-        return '<tr class="pika-row' + (pickWholeWeek ? ' pick-whole-week' : '') + (isRowSelected ? ' is-selected' : '') + '">' + (isRTL ? days.reverse() : days).join('') + '</tr>';
+        return '<tr ' + additionalDataAttributes + '  class="pika-row' + (pickWholeWeek ? ' pick-whole-week' : '') + (isRowSelected ? ' is-selected' : '') + '">' + (isRTL ? days.reverse() : days).join('') + '</tr>';
     },
 
-    renderBody = function(rows)
+    renderBody = function(rows, additionalDataAttributes)
     {
-        return '<tbody>' + rows.join('') + '</tbody>';
+        return '<tbody ' + additionalDataAttributes + ' >' + rows.join('') + '</tbody>';
     },
 
     renderHead = function(opts)
@@ -370,32 +373,32 @@
             arr.push('<th></th>');
         }
         for (i = 0; i < 7; i++) {
-            arr.push('<th scope="col"><abbr title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
+            arr.push('<th ' + opts.additionalDataAttributes + ' scope="col"><abbr ' + opts.additionalDataAttributes + ' title="' + renderDayName(opts, i) + '">' + renderDayName(opts, i, true) + '</abbr></th>');
         }
-        return '<thead><tr>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
+        return '<thead ' + opts.additionalDataAttributes + ' ><tr ' + opts.additionalDataAttributes + ' >' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
     },
 
-    renderTitle = function(instance, c, year, month, refYear, randId)
+    renderTitle = function(instance, c, year, month, refYear, randId, additionalDataAttributes)
     {
         var i, j, arr,
             opts = instance._o,
             isMinYear = year === opts.minYear,
             isMaxYear = year === opts.maxYear,
-            html = '<div id="' + randId + '" class="pika-title" role="heading" aria-live="assertive">',
+            html = '<div ' + additionalDataAttributes + ' id="' + randId + '" class="pika-title" role="heading" aria-live="assertive">',
             monthHtml,
             yearHtml,
             prev = true,
             next = true;
 
         for (arr = [], i = 0; i < 12; i++) {
-            arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
+            arr.push('<option ' + opts.additionalDataAttributes + ' value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
                 (i === month ? ' selected="selected"': '') +
                 ((isMinYear && i < opts.minMonth) || (isMaxYear && i > opts.maxMonth) ? 'disabled="disabled"' : '') + '>' +
                 opts.i18n.months[i] + '</option>');
         }
 
-        monthHtml = '<div class="pika-label">' + opts.i18n.months[month]
-            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-month" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
+        monthHtml = '<div ' + opts.additionalDataAttributes + ' class="pika-label">' + opts.i18n.months[month]
+            + ((opts.clickableDayAndWeekLabel === true)? '<select ' + opts.additionalDataAttributes + ' class="pika-select pika-select-month" tabindex="-1">' : '<div ' + opts.additionalDataAttributes + ' class="pika-select pika-select-month" tabindex="-1">')
             + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
             + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
@@ -409,11 +412,11 @@
 
         for (arr = []; i < j && i <= opts.maxYear; i++) {
             if (i >= opts.minYear) {
-                arr.push('<option value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
+                arr.push('<option ' + opts.additionalDataAttributes + ' value="' + i + '"' + (i === year ? ' selected="selected"': '') + '>' + (i) + '</option>');
             }
         }
-        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix
-            + ((opts.clickableDayAndWeekLabel === true)? '<select class="pika-select pika-select-year" tabindex="-1">' : '<div class="pika-select pika-select-month" tabindex="-1">')
+        yearHtml = '<div ' + opts.additionalDataAttributes + ' class="pika-label">' + year + opts.yearSuffix
+            + ((opts.clickableDayAndWeekLabel === true)? '<select ' + opts.additionalDataAttributes + ' class="pika-select pika-select-year" tabindex="-1">' : '<div ' + opts.additionalDataAttributes + ' class="pika-select pika-select-month" tabindex="-1">')
             + ((opts.clickableDayAndWeekLabel === true)? arr.join('') : "")
             + ((opts.clickableDayAndWeekLabel === true)? '</select></div>': '</div></div>');
 
@@ -432,10 +435,10 @@
         }
 
         if (c === 0) {
-            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
+            html += '<button ' + opts.additionalDataAttributes + ' class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
         }
         if (c === (instance._o.numberOfMonths - 1) ) {
-            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+            html += '<button ' + opts.additionalDataAttributes + ' class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
         }
 
         return html += '</div>';
@@ -443,7 +446,7 @@
 
     renderTable = function(opts, data, randId)
     {
-        return '<table cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
+        return '<table ' + opts.additionalDataAttributes + ' cellpadding="0" cellspacing="0" class="pika-table" role="grid" aria-labelledby="' + randId + '">' + renderHead(opts) + renderBody(data) + '</table>';
     },
 
 
@@ -641,6 +644,14 @@
         };
 
         self.el = document.createElement('div');
+        var attribs = opts.additionalDataAttributes.split(" ")
+        for (var index in attribs) {
+            if (attribs[index] === "") {
+                continue;
+            }
+            var attrib = document.createAttribute(attribs[index])
+            self.el.setAttributeNode(attrib)
+        }
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
         addEvent(self.el, 'mouseover', self._onMouseOver, true);
@@ -1030,7 +1041,7 @@
             randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
 
             for (var c = 0; c < opts.numberOfMonths; c++) {
-                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
+                html += '<div ' + opts.additionalDataAttributes + ' class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId, opts.additionalDataAttributes) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
 
             this.el.innerHTML = html;
@@ -1181,7 +1192,8 @@
                         showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths,
                         startText: opts.i18n.startText? opts.i18n.startText : "",
                         endText: opts.i18n.endText? opts.i18n.endText : "",
-                        startEndText: opts.i18n.startEndText? opts.i18n.startEndText : ""
+                        startEndText: opts.i18n.startEndText? opts.i18n.startEndText : "",
+                        additionalDataAttributes: opts.additionalDataAttributes
                     };
 
                 if (opts.pickWholeWeek && isSelected) {
@@ -1192,9 +1204,9 @@
 
                 if (++r === 7) {
                     if (opts.showWeekNumber) {
-                        row.unshift(renderWeek(i - before, month, year));
+                        row.unshift(renderWeek(i - before, month, year, opts.additionalDataAttributes));
                     }
-                    data.push(renderRow(row, opts.isRTL, opts.pickWholeWeek, isWeekSelected));
+                    data.push(renderRow(row, opts.isRTL, opts.pickWholeWeek, isWeekSelected, opts.additionalDataAttributes));
                     row = [];
                     r = 0;
                     isWeekSelected = false;
