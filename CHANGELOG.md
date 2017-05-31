@@ -1,3 +1,9 @@
+### 1.1.0 (2017-5-31)
+
+##### New Features
+
+* **DataAttrib:** Add ScopeAttrib to support Vue2 Scoped CSS ([a2711a87](https://github.com/willypt/Pikarange/commit/a2711a8759858645135ea10020dfeb4cbf23aaa2))
+
 #### 1.0.3 (2017-5-9)
 
 ##### New Features
