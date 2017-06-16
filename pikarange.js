@@ -343,7 +343,7 @@
         }
        return '<td ' + opts.additionalDataAttributes + ' data-day="' + opts.day + '" class="' + arr.join(' ') + '" aria-selected="' + ariaSelected + '">' +
                  '<button ' + opts.additionalDataAttributes + ' class="pika-button pika-day" type="button" ' +
-                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '" data-beforetext="' + opts.startText + '" data-aftertext="' + opts.endText + '" data-beforeaftertext="' + opts.startEndText + '">' +
+                    'data-pika-year="' + opts.year + '" data-pika-month="' + opts.month + '" data-pika-day="' + opts.day + '" data-beforetext="' + opts.startText + '" data-aftertext="' + opts.endText + '">' +
                         opts.day +
                  '</button>' +
                '</td>';
@@ -1039,7 +1039,7 @@
             }
 
             randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
-
+            console.log(this.calendars)
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div ' + opts.additionalDataAttributes + ' class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId, opts.additionalDataAttributes) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
@@ -1254,6 +1254,22 @@
             }
         },
 
+        getShowingCalendars: function ()
+        {
+            var calendars = [];
+            console.log('hi')
+            if (this.calendars) {
+                calendars.push(this.calendars[0]);
+                for (var c = 1; c < this._o.numberOfMonths; c++) {
+                    calendars[c] = adjustCalendar({
+                        month: calendars[0].month + c,
+                        year: calendars[0].year
+                    })
+                }
+            }
+            return calendars;
+        },
+
         /**
          * GAME OVER
          */
@@ -1281,3 +1297,4 @@
     return Pikarange;
 
 }));
+
