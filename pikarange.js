@@ -291,7 +291,9 @@
         clickableDayAndWeekLabel: true,
 
         // additional data attributes. Simple String to be added **directly** to the elements
-        additionalDataAttributes: ""
+        additionalDataAttributes: "",
+
+        showRangeOnHover: true
 
     },
 
@@ -1157,8 +1159,9 @@
                     isStartRange = opts.startRange && compareDates(opts.startRange, day),
                     isEndRange = opts.endRange && compareDates(opts.endRange, day),
                     isInRange =
-                        (opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange) ||
-                        (opts.startRange && !opts.endRange && opts.startRange < day && day < opts.dateHover),
+                        ((opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange) ||
+                        (opts.startRange && !opts.endRange && opts.startRange < day && day < opts.dateHover)) &&
+                        opts.showRangeOnHover,
                     isDisabled = (opts.minDate && day < opts.minDate) ||
                                  (opts.maxDate && day > opts.maxDate) ||
                                  (opts.disableWeekends && isWeekend(day)) ||
