@@ -1,3 +1,9 @@
+#### 1.2.1 (2017-07-03)
+
+##### New Features
+
+* **hover:** added toggle for hover effect in range calendars ([e445d874](https://github.com/willypt/Pikarange/commit/e445d87429e6dd15028b47aec73f1b020d3ef316))
+
 ### 1.2.0 (2017-6-16)
 
 ##### New Features
