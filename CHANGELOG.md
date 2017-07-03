@@ -1,3 +1,9 @@
+### 1.2.0 (2017-6-16)
+
+##### New Features
+
+* **showing calendars:** add showing calendars function ([b3e022da](https://github.com/willypt/Pikarange/commit/b3e022da38156bd0d62761dca9c023ced06f26ae))
+
 ### 1.1.0 (2017-5-31)
 
 ##### New Features
