@@ -115,6 +115,7 @@ Pikaday has many useful options:
 * `onClose` callback function for when the picker is hidden
 * `onDraw` callback function for when the picker draws a new month
 * `closeOnClick` controls so that the calendar does not closes after getting value
+* `showRangeOnHover` toogle the range hover style
 
 
 ## jQuery Plugin
