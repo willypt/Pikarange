@@ -1011,6 +1011,11 @@
             this._o.endRange = value;
         },
 
+        setEvents: function(value)
+        {
+            this._o.events = value;
+        },
+
         /**
          * refresh the HTML
          */
