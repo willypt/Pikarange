@@ -1,3 +1,9 @@
+#### 1.2.3 (2017-07-04)
+
+##### New Features
+
+* **events:** Add capability to edit events on the run ([56c6849c](https://github.com/willypt/Pikarange/commit/56c6849c58281a6448d3d7f3c0e2227374bb76e4))
+
 #### 1.2.2 (2017-07-03)
 
 #### 1.2.1 (2017-07-03)
