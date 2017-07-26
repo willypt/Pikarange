@@ -1046,7 +1046,6 @@
             }
 
             randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
-            console.log(this.calendars)
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 html += '<div ' + opts.additionalDataAttributes + ' class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId, opts.additionalDataAttributes) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
             }
@@ -1265,7 +1264,6 @@
         getShowingCalendars: function ()
         {
             var calendars = [];
-            console.log('hi')
             if (this.calendars) {
                 calendars.push(this.calendars[0]);
                 for (var c = 1; c < this._o.numberOfMonths; c++) {
